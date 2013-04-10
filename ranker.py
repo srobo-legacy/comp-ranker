@@ -71,3 +71,22 @@ def get_ranked_points(zpoints, dsq):
 	pos_map = calc_positions(zpoints, dsq)
 	rpoints = calc_ranked_points(pos_map, dsq)
 	return rpoints
+
+if __name__ == '__main__':
+	"""Demo"""
+	scores = { 'ABC' : 12,
+	           'DEF' : 3,
+	           'ABC2' : 4,
+	           'JLK' : 10 }
+
+	dsq = []
+
+	print 'Original scores:', scores
+	ranked_scores = get_ranked_points(scores, dsq)
+	print 'Ranked scores:', ranked_scores
+
+	dsq = ['ABC']
+
+	print "And now disqulifying 'ABC'."
+	ranked_scores = get_ranked_points(scores, dsq)
+	print 'Ranked scores:', ranked_scores
