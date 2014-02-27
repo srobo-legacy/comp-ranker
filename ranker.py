@@ -14,8 +14,8 @@ def calc_positions(zpoints, dsq_list):
 		if z in dsq_list:
 			p = -1
 		if p not in points_map:
-			points_map[p] = []
-		points_map[p].append(z)
+			points_map[p] = set()
+		points_map[p].add(z)
 
 	i = 1
 	for p in sorted(list(points_map.keys()), reverse = True):
