@@ -10,15 +10,15 @@ def calc_positions(zpoints, dsq_list):
 	pos_map = {}
 	points_map = {}
 
-	for z, p in zpoints.iteritems():
+	for z, p in zpoints.items():
 		if z in dsq_list:
 			p = -1
-		if not points_map.has_key(p):
+		if p not in points_map:
 			points_map[p] = []
 		points_map[p].append(z)
 
 	i = 1
-	for p in sorted(points_map.keys(), reverse = True):
+	for p in sorted(list(points_map.keys()), reverse = True):
 		pos_map[i] = points_map[p]
 		i += len(points_map[p])
 
@@ -34,7 +34,7 @@ def calc_ranked_points(pos_map, dsq_list):
 
 	rpoints = {}
 
-	for pos, zones in pos_map.iteritems():
+	for pos, zones in pos_map.items():
 		# remove any that are dsqaulified
 		# note that we do this before working out the ties, so that any
 		# dsq tie members are removed from contention
@@ -81,12 +81,12 @@ if __name__ == '__main__':
 
 	dsq = []
 
-	print 'Original scores:', scores
+	print('Original scores:', scores)
 	ranked_scores = get_ranked_points(scores, dsq)
-	print 'Ranked scores:', ranked_scores
+	print('Ranked scores:', ranked_scores)
 
 	dsq = ['ABC']
 
-	print "And now disqulifying 'ABC'."
+	print("And now disqulifying 'ABC'.")
 	ranked_scores = get_ranked_points(scores, dsq)
-	print 'Ranked scores:', ranked_scores
+	print('Ranked scores:', ranked_scores)
