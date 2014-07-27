@@ -1,1 +1,2 @@
-exec nosetests
+#!/bin/sh
+exec nosetests -d test $@

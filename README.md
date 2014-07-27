@@ -20,3 +20,6 @@ The mechanism used to alocate the ranked points is (quote taken from the
 
 As a result, the ranked points for an entrant (team) might not be an integer.
 However, for 4 entrants the value will always be a multiple of 0.5.
+
+### Tests
+Tests can be run by running `./run-tests`, which relies on nose.
