@@ -1,3 +1,0 @@
-[submodule "test/utils"]
-	path = test/utils
-	url = git://github.com/PeterJCLaw/python-test-utils.git
