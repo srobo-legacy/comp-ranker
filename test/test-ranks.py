@@ -12,7 +12,7 @@ del p
 import unittest
 
 # Local
-import ranker
+from sr.comp import ranker
 
 simple_data = { '0': 3, '1': 2, '2': 1, '3': 0 }
 simple_pos = { 1: set(['0']), 2: set(['1']), 3: set(['2']), 4: set(['3']) }
