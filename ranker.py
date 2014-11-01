@@ -38,25 +38,26 @@ def calc_ranked_points(pos_map, dsq_list):
         # remove any that are dsqaulified
         # note that we do this before working out the ties, so that any
         # dsq tie members are removed from contention
-        zones = [ z for z in zones if z not in dsq_list ]
+        zones = [z for z in zones if z not in dsq_list]
         if len(zones) == 0:
             continue
 
-        # max points is 4, add one because pos is 1-indexed
-        points = (4 + 1) - pos
+        # max points is 8, decreases by two for subsequent positions. pos is
+        # 1-indexed, hence the subtraction
+        points = 8 - 2*(pos - 1)
         # Now that we have the value for this position if it were not a tie,
         # we need to allow for ties. In case of a tie, the available points
         # for all the places used are shared by all those thus placed.
-        # Eg: three first places get 3pts each (4+3+2)/3.
+        # Eg: three first places get 6pts each (8+6+4)/3.
         # Rather than generate a list and average it, it's quicker to just
         # do some maths using the max value and the length of the list
-        points = points - ( (len(zones) - 1) / 2.0 )
+        points = points - (len(zones) - 1)
         for z in zones:
             rpoints[z] = points
 
     # those that were dsq get 0
     for z in dsq_list:
-        rpoints[z] = 0.0
+        rpoints[z] = 0
 
     return rpoints
 
