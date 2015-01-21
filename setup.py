@@ -5,7 +5,7 @@ with open('README.md') as f:
     long_description = f.read()
 
 
-setup(name='sr.ranker',
+setup(name='sr.comp.ranker',
       version='1.0.0',
       packages=find_packages(),
       namespace_packages=['sr', 'sr.comp'],
