@@ -1,18 +1,7 @@
-
-import os.path
-import sys
-
-# Hack the path..
-
-p = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
-sys.path.insert(0, p)
-del p
-
-# External
 import unittest
 
-# Local
 from sr.comp import ranker
+
 
 simple_data = { '0': 3, '1': 2, '2': 1, '3': 0 }
 simple_pos = { 1: set(['0']), 2: set(['1']), 3: set(['2']), 4: set(['3']) }
@@ -32,6 +21,7 @@ tie2_dsq = [ '0', '2' ]
 tie2_pos = { 1: set(['1']), 2: set(['3']), 3: set(['0', '2']) }
 tie2_points = { '0': 0, '1': 8, '2': 0, '3': 6 }
 
+
 class PositionsTests(unittest.TestCase):
 
     def test_simple(self):
@@ -50,6 +40,7 @@ class PositionsTests(unittest.TestCase):
         pos = ranker.calc_positions(tie2_data, tie2_dsq)
         assert tie2_pos == pos, "Wrong positions"
 
+
 class RankedPointsTests(unittest.TestCase):
 
     def test_simple(self):
@@ -63,6 +54,3 @@ class RankedPointsTests(unittest.TestCase):
     def test_dsq_tie(self):
         points = ranker.calc_ranked_points(tie2_pos, tie2_dsq)
         assert tie2_points == points, "Wrong points"
-
-if __name__ == '__main__':
-    unittest.main(buffer=True)

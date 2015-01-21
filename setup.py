@@ -12,5 +12,6 @@ setup(name='sr.ranker',
       long_description=long_description,
       author='Student Robotics Competition Software SIG',
       author_email='srobo-devel@googlegroups.com',
-      install_requires=['nose >=1.3, <2'],
+      setup_requires=['nose >=1.3, <2'],
+      test_suite='nose.collector',
       zip_safe=True)
