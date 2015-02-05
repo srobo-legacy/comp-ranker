@@ -1,10 +1,28 @@
 
 def calc_positions(zpoints, dsq_list=()):
-    """
-    A function to work out the placings of zones in a game, given the game points.
-    @param zpoints: a dict of zone number to game points.
-    @param dsq_list: a list of zones that should be considered below last.
-    @returns: a dict of position to array of zone numbers.
+    """Calculate positions from a map of zones to in-game points.
+
+    zpoints is a dictionary from some key (typically a zone or corner name) to
+    game points [#gp_type]_. dsq_list, if provided, is a list of keys of teams
+    or zones that have been disqualified and are therefore considered below last
+    place.
+
+    A mapping from positions to an iterable of teams in that position is
+    returned.
+
+    .. note::
+       In case of a tie, both teams are awarded the same position, as is usual
+       in sport. That is, if team A has 3 points, team B has 3 points and team C
+       has 1 point, then teams A and B are both awarded 1\ :sup:`st`, and C is
+       awarded 3\ :sup:`rd`.
+
+    .. [#gp_type] Usually a numeric type, but can be any type that is comparable
+       and usable as a key for dictionaries.
+
+    >>> calc_positions({'A': 3, 'B': 3, 'C': 1})
+    {1: {'A', 'B'}, 3: {'C'}}
+    >>> calc_positions({'A': 3, 'B': 3, 'C': 0, 'D': 0}, ['A', 'C'])
+    {1: {'B'}, 2: {'D'}, 3: {'A', 'C'}}
     """
 
     pos_map = {}
@@ -25,11 +43,26 @@ def calc_positions(zpoints, dsq_list=()):
     return pos_map
 
 def calc_ranked_points(pos_map, dsq_list=()):
-    """
-    A function to work out the ranked points for each zone, given the rankings within that game.
-    @param pos_map: a dict of position to array of zone numbers.
-    @param dsq_list: a list of zones that shouldn't be awarded ranked points.
-    @returns: a dict of zone number to rank points.
+    """Calculate SR league points from a mapping of positions to teams.
+
+    pos_map is a mapping from positions (integers indicating ending position,
+    such as 1 for 1\ :sup:`st`, 3 for 3\ :sup:`rd` etc) to some iterable of
+    teams or zones in that position. If provided, dsq_list is a list of teams or
+    zones that are considered to be disqualified.
+
+    A mapping from zones/teams to SR league points is returned.
+
+    League points, and their calculation, are described in detail in the SR
+    rulebook_.
+
+    .. _rulebook: https://www.studentrobotics.org/resources/2015/rulebook.pdf
+
+    >>> calc_ranked_points({1: ['A'], 2: ['B'], 3: ['C'], 4: ['D']})
+    {'A': 8, 'B': 6, 'C': 4, 'D': 2}
+    >>> calc_ranked_points({1: ['A', 'B'], 2: ['C', 'D']})
+    {'A': 7, 'B': 7, 'C': 3, 'D': 4}
+    >>> calc_ranked_points({1: ['B'], 2: ['D'], 3: ['A', 'C']}, ['A', 'C'])
+    {'A': 0, 'B': 8, 'C': 0, 'D': 6}
     """
 
     rpoints = {}
@@ -62,12 +95,14 @@ def calc_ranked_points(pos_map, dsq_list=()):
     return rpoints
 
 def get_ranked_points(zpoints, dsq=()):
-    """
-    A function to work out the rank points for each zone, given the game points.
-    This is a thin convenience wrapper around `calc_positions` and `calc_rank_points`.
-    @param zpoints: a dict of zone number to game points.
-    @param dsq: a list of zones that shouldn't be awarded ranked points.
-    @returns: a dict of zone number to rank points.
+    """Compute, from a mapping of teams to game points, the teams' league
+    points.
+
+    This is a convenience wrapper around `calc_positions` and
+    `calc_rank_points`.
+ 
+    >>> get_ranked_points({'A': 1, 'B': 3, 'C': 3, 'D': 4}, ['A'])
+    {'A': 0, 'B': 5, 'C': 5, 'D': 8}
     """
     pos_map = calc_positions(zpoints, dsq)
     rpoints = calc_ranked_points(pos_map, dsq)
