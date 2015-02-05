@@ -28,8 +28,16 @@ class PositionsTests(unittest.TestCase):
         pos = ranker.calc_positions(simple_data, [])
         assert simple_pos == pos, "Wrong positions"
 
+    def test_simple_no_dsq(self):
+        pos = ranker.calc_positions(simple_data)
+        assert simple_pos == pos, "Wrong positions"
+
     def test_tie(self):
         pos = ranker.calc_positions(tie1_data, [])
+        assert tie1_pos == pos, "Wrong positions"
+
+    def test_tie_no_dsq(self):
+        pos = ranker.calc_positions(tie1_data)
         assert tie1_pos == pos, "Wrong positions"
 
     def test_dsq(self):
@@ -47,8 +55,16 @@ class RankedPointsTests(unittest.TestCase):
         points = ranker.calc_ranked_points(simple_pos, [])
         assert simple_points == points, "Wrong points"
 
+    def test_simple_no_dsq(self):
+        points = ranker.calc_ranked_points(simple_pos)
+        assert simple_points == points, "Wrong points"
+
     def test_tie(self):
         points = ranker.calc_ranked_points(tie1_pos, [])
+        assert tie1_points == points, "Wrong points"
+
+    def test_tie_no_dsq(self):
+        points = ranker.calc_ranked_points(tie1_pos)
         assert tie1_points == points, "Wrong points"
 
     def test_dsq_tie(self):
