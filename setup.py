@@ -12,6 +12,9 @@ setup(name='sr.comp.ranker',
       long_description=long_description,
       author='Student Robotics Competition Software SIG',
       author_email='srobo-devel@googlegroups.com',
-      setup_requires=['nose >=1.3, <2'],
+      setup_requires=[
+          'nose >=1.3, <2',
+          'Sphinx >=1.3b, <2'
+      ],
       test_suite='nose.collector',
       zip_safe=True)
