@@ -1,5 +1,5 @@
 
-def calc_positions(zpoints, dsq_list):
+def calc_positions(zpoints, dsq_list=()):
     """
     A function to work out the placings of zones in a game, given the game points.
     @param zpoints: a dict of zone number to game points.
@@ -24,7 +24,7 @@ def calc_positions(zpoints, dsq_list):
 
     return pos_map
 
-def calc_ranked_points(pos_map, dsq_list):
+def calc_ranked_points(pos_map, dsq_list=()):
     """
     A function to work out the ranked points for each zone, given the rankings within that game.
     @param pos_map: a dict of position to array of zone numbers.
@@ -61,7 +61,7 @@ def calc_ranked_points(pos_map, dsq_list):
 
     return rpoints
 
-def get_ranked_points(zpoints, dsq):
+def get_ranked_points(zpoints, dsq=()):
     """
     A function to work out the rank points for each zone, given the game points.
     This is a thin convenience wrapper around `calc_positions` and `calc_rank_points`.
