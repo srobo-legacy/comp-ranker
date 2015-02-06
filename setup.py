@@ -17,4 +17,4 @@ setup(name='sr.comp.ranker',
           'Sphinx >=1.3b, <2'
       ],
       test_suite='nose.collector',
-      zip_safe=True)
+      zip_safe=False)
