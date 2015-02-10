@@ -1,23 +1,24 @@
+"""Conversions of game points into league points."""
 
 def calc_positions(zpoints, dsq_list=()):
-    """Calculate positions from a map of zones to in-game points.
+    r"""Calculate positions from a map of zones to in-game points.
 
-    ``zpoints`` is a dictionary from some key (typically a zone or corner name) to
-    game points [#gp_type]_. ``dsq_list``, if provided, is a list of keys of teams
-    or zones that have been disqualified and are therefore considered below last
-    place.
+    ``zpoints`` is a dictionary from some key (typically a zone or corner name)
+    to game points [#gp_type]_. ``dsq_list``, if provided, is a list of keys of
+    teams or zones that have been disqualified and are therefore considered
+    below last place.
 
     A mapping from positions to an iterable of teams in that position is
     returned.
 
     .. note::
        In case of a tie, both teams are awarded the same position, as is usual
-       in sport. That is, if team A has 3 points, team B has 3 points and team C
-       has 1 point, then teams A and B are both awarded 1\ :sup:`st`, and C is
-       awarded 3\ :sup:`rd`.
+       in sport. That is, if team A has 3 points, team B has 3 points and team
+       C has 1 point, then teams A and B are both awarded 1\ :sup:`st`, and C
+       is awarded 3\ :sup:`rd`.
 
-    .. [#gp_type] Usually a numeric type, but can be any type that is comparable
-       and usable as a key for dictionaries.
+    .. [#gp_type] Usually a numeric type, but can be any type that is
+       comparable and usable as a key for dictionaries.
 
     >>> calc_positions({'A': 3, 'B': 3, 'C': 1})
     {1: {'A', 'B'}, 3: {'C'}}
@@ -28,27 +29,28 @@ def calc_positions(zpoints, dsq_list=()):
     pos_map = {}
     points_map = {}
 
-    for z, p in zpoints.items():
-        if z in dsq_list:
-            p = -1
-        if p not in points_map:
-            points_map[p] = set()
-        points_map[p].add(z)
+    for zone, points in zpoints.items():
+        if zone in dsq_list:
+            points = -1
+        if points not in points_map:
+            points_map[points] = set()
+        points_map[points].add(zone)
 
-    i = 1
-    for p in sorted(list(points_map.keys()), reverse = True):
-        pos_map[i] = points_map[p]
-        i += len(points_map[p])
+    position = 1
+    for points in sorted(list(points_map.keys()), reverse=True):
+        pos_map[position] = points_map[points]
+        position += len(points_map[points])
 
     return pos_map
 
-def calc_ranked_points(pos_map, dsq_list=()):
-    """Calculate SR league points from a mapping of positions to teams.
 
-    ``pos_map`` is a mapping from positions (integers indicating ending position,
-    such as 1 for 1\ :sup:`st`, 3 for 3\ :sup:`rd` etc) to some iterable of
-    teams or zones in that position. If provided, ``dsq_list`` is a list of teams or
-    zones that are considered to be disqualified.
+def calc_ranked_points(pos_map, dsq_list=()):
+    r"""Calculate SR league points from a mapping of positions to teams.
+
+    ``pos_map`` is a mapping from positions (integers indicating ending
+    position, such as 1 for 1\ :sup:`st`, 3 for 3\ :sup:`rd` etc) to some
+    iterable of teams or zones in that position. If provided, ``dsq_list`` is a
+    list of teams or zones that are considered to be disqualified.
 
     A mapping from zones/teams to SR league points is returned.
 
@@ -85,14 +87,15 @@ def calc_ranked_points(pos_map, dsq_list=()):
         # Rather than generate a list and average it, it's quicker to just
         # do some maths using the max value and the length of the list
         points = points - (len(zones) - 1)
-        for z in zones:
-            rpoints[z] = points
+        for zone in zones:
+            rpoints[zone] = points
 
     # those that were dsq get 0
-    for z in dsq_list:
-        rpoints[z] = 0
+    for disqualified_zone in dsq_list:
+        rpoints[disqualified_zone] = 0
 
     return rpoints
+
 
 def get_ranked_points(zpoints, dsq=()):
     """Compute, from a mapping of teams to game points, the teams' league
@@ -108,12 +111,12 @@ def get_ranked_points(zpoints, dsq=()):
     rpoints = calc_ranked_points(pos_map, dsq)
     return rpoints
 
-if __name__ == '__main__':
+def _demo():
     """Demo"""
-    scores = { 'ABC' : 12,
-               'DEF' : 3,
-               'ABC2' : 4,
-               'JLK' : 10 }
+    scores = {'ABC': 12,
+              'DEF':  3,
+              'ABC2': 4,
+              'JLK': 10}
 
     dsq = []
 
@@ -126,3 +129,6 @@ if __name__ == '__main__':
     print("And now disqulifying 'ABC'.")
     ranked_scores = get_ranked_points(scores, dsq)
     print('Ranked scores:', ranked_scores)
+
+if __name__ == '__main__':
+    _demo()
