@@ -2,13 +2,15 @@
 
 from collections import defaultdict
 
-def calc_positions(zpoints, dsq_list=()):
-    r"""Calculate positions from a map of zones to in-game points.
 
-    ``zpoints`` is a dictionary from some key (typically a zone or corner name)
-    to game points [#gp_type]_. ``dsq_list``, if provided, is a list of keys of
-    teams or zones that have been disqualified and are therefore considered
-    below last place.
+def calc_positions(zpoints, dsq_list=()):
+    r"""
+    Calculate positions from a map of zones to in-game points.
+
+    ``zpoints`` is a :py:class:`dict` from some key (typically a zone or corner
+    name) to game points [#gp_type]_. ``dsq_list``, if provided, is a
+    :py:class:`list` of keys of teams or zones that have been disqualified and
+    are therefore considered below last place.
 
     A mapping from positions to an iterable of teams in that position is
     returned.
@@ -45,7 +47,8 @@ def calc_positions(zpoints, dsq_list=()):
 
 
 def calc_ranked_points(pos_map, dsq_list=()):
-    r"""Calculate SR league points from a mapping of positions to teams.
+    r"""
+    Calculate SR league points from a mapping of positions to teams.
 
     ``pos_map`` is a mapping from positions (integers indicating ending
     position, such as 1 for 1\ :sup:`st`, 3 for 3\ :sup:`rd` etc) to some
@@ -98,8 +101,8 @@ def calc_ranked_points(pos_map, dsq_list=()):
 
 
 def get_ranked_points(zpoints, dsq=()):
-    """Compute, from a mapping of teams to game points, the teams' league
-    points.
+    """
+    Compute, from a mapping of teams to game points, the teams' league points.
 
     This is a convenience wrapper around `calc_positions` and
     `calc_rank_points`.
@@ -111,8 +114,9 @@ def get_ranked_points(zpoints, dsq=()):
     rpoints = calc_ranked_points(pos_map, dsq)
     return rpoints
 
+
 def _demo():
-    """Demo"""
+    """Demo."""
     scores = {'ABC': 12,
               'DEF':  3,
               'ABC2': 4,
@@ -129,6 +133,7 @@ def _demo():
     print("And now disqulifying 'ABC'.")
     ranked_scores = get_ranked_points(scores, dsq)
     print('Ranked scores:', ranked_scores)
+
 
 if __name__ == '__main__':
     _demo()
