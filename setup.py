@@ -14,7 +14,7 @@ setup(name='sr.comp.ranker',
       author_email='srobo-devel@googlegroups.com',
       setup_requires=[
           'nose >=1.3, <2',
-          'Sphinx >=1.3b, <2'
+          'Sphinx >=1.2, <2'
       ],
       test_suite='nose.collector',
       zip_safe=False)
