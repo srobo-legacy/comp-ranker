@@ -1,5 +1,7 @@
 """Conversions of game points into league points."""
 
+from collections import defaultdict
+
 def calc_positions(zpoints, dsq_list=()):
     r"""Calculate positions from a map of zones to in-game points.
 
@@ -27,13 +29,11 @@ def calc_positions(zpoints, dsq_list=()):
     """
 
     pos_map = {}
-    points_map = {}
+    points_map = defaultdict(set)
 
     for zone, points in zpoints.items():
         if zone in dsq_list:
             points = -1
-        if points not in points_map:
-            points_map[points] = set()
         points_map[points].add(zone)
 
     position = 1
