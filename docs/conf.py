@@ -1,9 +1,13 @@
-import sys, os
+import os
+import sys
+
+
 sys.path.insert(0, os.path.abspath('..'))
 
 # Sphinx configuration
 extensions = [
     'sphinx.ext.autodoc',
+    'sphinx.ext.intersphinx',
     'sphinx.ext.viewcode'
 ]
 
@@ -18,3 +22,4 @@ version = '1.0.0'
 
 html_theme = 'default'
 
+intersphinx_mapping = {'http://docs.python.org/': None}
