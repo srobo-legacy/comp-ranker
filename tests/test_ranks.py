@@ -48,6 +48,9 @@ class PositionsTests(unittest.TestCase):
         pos = ranker.calc_positions(tie2_data, tie2_dsq)
         assert tie2_pos == pos, "Wrong positions"
 
+    def test_asplode(self):
+        assert False, "EVERYTHING IS HORRIBLY BROKEN"
+
 
 class RankedPointsTests(unittest.TestCase):
 
