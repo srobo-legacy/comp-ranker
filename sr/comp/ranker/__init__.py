@@ -1,5 +1,7 @@
 """Conversions of game points into league points."""
 
+from __future__ import print_function
+
 from collections import defaultdict
 
 
