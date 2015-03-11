@@ -1,21 +1,19 @@
 """Conversions of game points into league points."""
-
 from __future__ import print_function
 
 from collections import defaultdict
 
 
 def calc_positions(zpoints, dsq_list=()):
-    r"""
+    """
     Calculate positions from a map of zones to in-game points.
 
-    ``zpoints`` is a :py:class:`dict` from some key (typically a zone or corner
-    name) to game points [#gp_type]_. ``dsq_list``, if provided, is a
-    :py:class:`list` of keys of teams or zones that have been disqualified and
-    are therefore considered below last place.
-
-    A mapping from positions to an iterable of teams in that position is
-    returned.
+    :param dict zpoints: A mapping from some key (typically a zone or corner
+                         name) to game points [#gp_type]_.
+    :param list dsq_list: If provided, is a :py:class:`list` of keys of teams
+                          or zones that have been disqualified and are
+                          therefore considered below last place.
+    :return: A mapping from positions to an iterable of teams in that position.
 
     .. note::
        In case of a tie, both teams are awarded the same position, as is usual
@@ -31,7 +29,6 @@ def calc_positions(zpoints, dsq_list=()):
     >>> calc_positions({'A': 3, 'B': 3, 'C': 0, 'D': 0}, ['A', 'C'])
     {1: {'B'}, 2: {'D'}, 3: {'A', 'C'}}
     """
-
     pos_map = {}
     points_map = defaultdict(set)
 
@@ -49,15 +46,16 @@ def calc_positions(zpoints, dsq_list=()):
 
 
 def calc_ranked_points(pos_map, dsq_list=()):
-    r"""
+    """
     Calculate SR league points from a mapping of positions to teams.
 
-    ``pos_map`` is a mapping from positions (integers indicating ending
-    position, such as 1 for 1\ :sup:`st`, 3 for 3\ :sup:`rd` etc) to some
-    iterable of teams or zones in that position. If provided, ``dsq_list`` is a
-    list of teams or zones that are considered to be disqualified.
-
-    A mapping from zones/teams to SR league points is returned.
+    :param dict pos_map: A mapping from positions (integers indicating ending
+                         position, such as 1 for 1\ :sup:`st`, 3 for
+                         3\ :sup:`rd` etc) to some iterable of teams or zones
+                         in that position.
+    :param list dsq_list: If provided, is a :py:class:`list` of teams or zones
+                          that are considered to be disqualified.
+    :return: A mapping from zones/teams to SR league points.
 
     League points, and their calculation, are described in detail in the SR
     rulebook_.
@@ -71,7 +69,6 @@ def calc_ranked_points(pos_map, dsq_list=()):
     >>> calc_ranked_points({1: ['B'], 2: ['D'], 3: ['A', 'C']}, ['A', 'C'])
     {'A': 0, 'B': 8, 'C': 0, 'D': 6}
     """
-
     rpoints = {}
 
     for pos, zones in pos_map.items():
@@ -118,7 +115,7 @@ def get_ranked_points(zpoints, dsq=()):
 
 
 def _demo():
-    """Demo."""
+    """Run a quick demo of this module."""
     scores = {'ABC': 12,
               'DEF':  3,
               'ABC2': 4,

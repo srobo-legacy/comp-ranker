@@ -23,7 +23,6 @@ tie2_points = { '0': 0, '1': 8, '2': 0, '3': 6 }
 
 
 class PositionsTests(unittest.TestCase):
-
     def test_simple(self):
         pos = ranker.calc_positions(simple_data, [])
         assert simple_pos == pos, "Wrong positions"
@@ -50,7 +49,6 @@ class PositionsTests(unittest.TestCase):
 
 
 class RankedPointsTests(unittest.TestCase):
-
     def test_simple(self):
         points = ranker.calc_ranked_points(simple_pos, [])
         assert simple_points == points, "Wrong points"
