@@ -92,7 +92,10 @@ def calc_ranked_points(pos_map, dsq_list=()):
     {'A': 8, 'B': 6, 'C': 4, 'D': 2}
 
     >>> calc_ranked_points({1: ['A', 'B'], 2: ['C', 'D']})
-    {'A': 7, 'B': 7, 'C': 5, 'D': 5}
+    ValueError("Cannot have position 2 when position 1 is shared by 2 zones")
+
+    >>> calc_ranked_points({1: ['A', 'B'], 3: ['C', 'D']})
+    {'A': 7, 'B': 7, 'C': 3, 'D': 3}
 
     >>> calc_ranked_points({1: ['B'], 2: ['D'], 3: ['A', 'C']}, ['A', 'C'])
     {'A': 0, 'B': 8, 'C': 0, 'D': 6}
@@ -120,6 +123,14 @@ def calc_ranked_points(pos_map, dsq_list=()):
         points = points - (len(zones) - 1)
         for zone in zones:
             rpoints[zone] = points
+
+        for offset in range(1, len(zones)):
+            invalid_pos = pos + offset
+            if invalid_pos in pos_map:
+                raise ValueError(
+                    "Cannot have position {0} when position {1} is shared by "
+                    "{2} zones".format(invalid_pos, pos, len(zones)),
+                )
 
     # those that were dsq get 0
     for disqualified_zone in dsq_list:

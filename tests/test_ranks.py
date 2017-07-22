@@ -68,3 +68,15 @@ class RankedPointsTests(unittest.TestCase):
     def test_dsq_tie(self):
         points = ranker.calc_ranked_points(tie2_pos, tie2_dsq)
         assert tie2_points == points, "Wrong points"
+
+    def test_detects_position_overlap_single_tie(self):
+        with self.assertRaises(ValueError):
+            ranker.calc_ranked_points({1: ['A', 'B'], 2: ['C', 'D']})
+
+    def test_detects_higher_position_overlap_double_tie_higher(self):
+        with self.assertRaises(ValueError):
+            ranker.calc_ranked_points({1: ['A', 'B', 'C'], 2: ['D']})
+
+    def test_detects_lower_position_overlap_double_tie(self):
+        with self.assertRaises(ValueError):
+            ranker.calc_ranked_points({1: ['A', 'B', 'C'], 3: ['D']})
