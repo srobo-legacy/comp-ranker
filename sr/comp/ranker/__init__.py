@@ -92,7 +92,9 @@ def calc_ranked_points(pos_map, dsq_list=()):
     {'A': 8, 'B': 6, 'C': 4, 'D': 2}
 
     >>> calc_ranked_points({1: ['A', 'B'], 2: ['C', 'D']})
-    ValueError("Cannot have position 2 when position 1 is shared by 2 zones")
+    Traceback (most recent call last):
+        ...
+    ValueError: Cannot have position 2 when position 1 is shared by 2 zones
 
     >>> calc_ranked_points({1: ['A', 'B'], 3: ['C', 'D']})
     {'A': 7, 'B': 7, 'C': 3, 'D': 3}
