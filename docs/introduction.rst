@@ -21,10 +21,13 @@ sufficient separation in the league.
 The League Points algorithm
 ----------------------------
 
-The basic league points algorithm is as follows. Each match is worth 20 league
-points in total, between all 4 teams. 8 points are awarded to the team in 1\ 
-:sup:`st` place, 6 to the team in 2\ :sup:`nd` place, 4 to the team in 3\ 
-:sup:`rd` and 2 to the team in last place.
+League points are awarded such that the winnig team earns ``2 * num_zones``
+points and each subsequent place below earns two points less. When there are
+teams in every zone, the team in last place thus earns 2 points.
+
+For example, in a four-zone arena, in a match between 4 teams: 8 points are
+awarded to the team in 1\ :sup:`st` place, 6 to the team in 2\ :sup:`nd` place,
+4 to the team in 3\ :sup:`rd` and 2 to the team in last place.
 
 In case of a tie, the points between tied teams are divided evenly. For
 instance, in a 2-way tie for 1\ :sup:`st` place, there are a total of (8 + 6 =

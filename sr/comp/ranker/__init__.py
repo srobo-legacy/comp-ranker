@@ -112,9 +112,9 @@ def _points_for_position(position, winner_points, num_tied):
 
     return points - (num_tied - 1)
 
-def calc_ranked_points(pos_map, dsq_list=()):
+def calc_ranked_points(pos_map, dsq_list=(), num_zones=4):
     """
-    Calculate SR league points from a mapping of positions to teams.
+    Calculate league points from a mapping of positions to teams.
 
     The league points algorithm is documented in :ref:`league-points-algorithm`.
 
@@ -127,14 +127,25 @@ def calc_ranked_points(pos_map, dsq_list=()):
     dsq_list : list
         If provided, is a :py:class:`list` of teams or zones that are
         considered to be disqualified.
+    num_zones : int
+        The overall number of zones. This is usually the same as the total
+        number of zones/team provided in ``pos_map`` (and cannot be less than
+        that), though may be more if there were empty zones during some given
+        match.
 
     Returns
     -------
     dict
-        A mapping from zones/teams to SR league points.
+        A mapping from zones/teams to league points.
 
     Examples
     --------
+    Uniquely placed teams in a four-zone arena would earn 8, 6, 4 and 2 points
+    for first through fourth place respectively.
+
+    Three teams tied for first place in a four-zone arena will each earn 6
+    points (since this is ``(8+6+4)/3``).
+
     Some examples of usage are shownn below.
 
     >>> calc_ranked_points({1: ['A'], 2: ['B'], 3: ['C'], 4: ['D']})
@@ -148,11 +159,25 @@ def calc_ranked_points(pos_map, dsq_list=()):
     >>> calc_ranked_points({1: ['A', 'B'], 3: ['C', 'D']})
     {'A': 7, 'B': 7, 'C': 3, 'D': 3}
 
+    >>> calc_ranked_points({1: ['A', 'B']}, num_zones=3)
+    {'A': 5, 'B': 5}
+
     >>> calc_ranked_points({1: ['B'], 2: ['D'], 3: ['A', 'C']}, ['A', 'C'])
     {'A': 0, 'B': 8, 'C': 0, 'D': 6}
     """
 
+    num_teams = sum(len(v) for v in pos_map.values())
+    if num_teams > num_zones:
+        raise ValueError(
+            "More teams given positions ({0}) than zones available ({1})".format(
+                num_teams,
+                num_zones,
+            ),
+        )
+
     rpoints = {}
+
+    winner_points = 2 * num_zones
 
     for pos, zones in pos_map.items():
         # remove any that are dsqaulified
@@ -162,7 +187,7 @@ def calc_ranked_points(pos_map, dsq_list=()):
         if len(zones) == 0:
             continue
 
-        points = _points_for_position(pos, winner_points=8, num_tied=len(zones))
+        points = _points_for_position(pos, winner_points, num_tied=len(zones))
 
         for zone in zones:
             rpoints[zone] = points
