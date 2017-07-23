@@ -16,6 +16,8 @@ The SR game, however, is unusual in that each game has 4 teams taking part.
 Giving league points only to the team that comes first would not create
 sufficient separation in the league.
 
+.. _league-points-algorithm:
+
 The League Points algorithm
 ----------------------------
 
@@ -45,5 +47,5 @@ points algorithm:
  2. After league points are distributed, the awarded league points are set to 0
     for the disqualified team.
 
-.. _rulebook: https://www.studentrobotics.org/resources/2015/rulebook.pdf
+.. _rulebook: https://www.studentrobotics.org/docs/resources/2017/rulebook.pdf
 

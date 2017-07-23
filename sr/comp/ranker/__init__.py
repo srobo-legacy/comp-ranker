@@ -71,6 +71,8 @@ def calc_ranked_points(pos_map, dsq_list=()):
     """
     Calculate SR league points from a mapping of positions to teams.
 
+    The league points algorithm is documented in :ref:`league-points-algorithm`.
+
     Parameters
     ----------
     pos_map : dict
@@ -85,13 +87,6 @@ def calc_ranked_points(pos_map, dsq_list=()):
     -------
     dict
         A mapping from zones/teams to SR league points.
-
-    Note
-    ----
-    League points, and their calculation, are described in detail in the SR
-    rulebook_.
-
-    .. _rulebook: https://www.studentrobotics.org/resources/2015/rulebook.pdf
 
     Examples
     --------
