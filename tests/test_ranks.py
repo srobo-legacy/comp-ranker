@@ -31,6 +31,8 @@ tie2_points_5_zones = { '0': 0, '1': 10, '2': 0, '3': 8 }
 
 
 class PositionsTests(unittest.TestCase):
+    longMessage = True
+
     def test_reject_non_integer_points(self):
         data = {k: str(v) for k, v in simple_data.items()}
         with self.assertRaises(ValueError):
@@ -43,76 +45,78 @@ class PositionsTests(unittest.TestCase):
 
     def test_simple(self):
         pos = ranker.calc_positions(simple_data, [])
-        assert simple_pos == pos, "Wrong positions"
+        self.assertEqual(simple_pos, pos, "Wrong positions")
 
     def test_simple_no_dsq(self):
         pos = ranker.calc_positions(simple_data)
-        assert simple_pos == pos, "Wrong positions"
+        self.assertEqual(simple_pos, pos, "Wrong positions")
 
     def test_two_teams(self):
         pos = ranker.calc_positions(two_teams_data, [])
-        assert two_teams_pos == pos, "Wrong positions"
+        self.assertEqual(two_teams_pos, pos, "Wrong positions")
 
     def test_tie(self):
         pos = ranker.calc_positions(tie1_data, [])
-        assert tie1_pos == pos, "Wrong positions"
+        self.assertEqual(tie1_pos, pos, "Wrong positions")
 
     def test_tie_no_dsq(self):
         pos = ranker.calc_positions(tie1_data)
-        assert tie1_pos == pos, "Wrong positions"
+        self.assertEqual(tie1_pos, pos, "Wrong positions")
 
     def test_dsq(self):
         pos = ranker.calc_positions(dsq_data, dsq_dsq)
-        assert dsq_pos == pos, "Wrong positions"
+        self.assertEqual(dsq_pos, pos, "Wrong positions")
 
     def test_dsq_tie(self):
         pos = ranker.calc_positions(tie2_data, tie2_dsq)
-        assert tie2_pos == pos, "Wrong positions"
+        self.assertEqual(tie2_pos, pos, "Wrong positions")
 
 
 class RankedPointsTests(unittest.TestCase):
+    longMessage = True
+
     def test_reject_too_may_teams(self):
         # self-check
-        assert len(simple_pos) > 2
+        self.assertGreater(len(simple_pos), 2, "Need more than two entrants")
 
         with self.assertRaises(ValueError):
             ranker.calc_ranked_points(simple_pos, num_zones=2)
 
     def test_simple(self):
         points = ranker.calc_ranked_points(simple_pos, [])
-        assert simple_points == points, "Wrong points"
+        self.assertEqual(simple_points, points, "Wrong points")
 
     def test_simple_spare_zone(self):
         points = ranker.calc_ranked_points(simple_pos, num_zones=5)
-        assert simple_points_5_zones == points, "Wrong points"
+        self.assertEqual(simple_points_5_zones, points, "Wrong points")
 
     def test_simple_no_dsq(self):
         points = ranker.calc_ranked_points(simple_pos)
-        assert simple_points == points, "Wrong points"
+        self.assertEqual(simple_points, points, "Wrong points")
 
     def test_two_teams(self):
         points = ranker.calc_ranked_points(two_teams_pos, num_zones=2)
-        assert two_teams_points_2_zones == points, "Wrong points"
+        self.assertEqual(two_teams_points_2_zones, points, "Wrong points")
 
     def test_two_teams_two_spare_zones(self):
         points = ranker.calc_ranked_points(two_teams_pos, num_zones=4)
-        assert two_teams_points_4_zones == points, "Wrong points"
+        self.assertEqual(two_teams_points_4_zones, points, "Wrong points")
 
     def test_tie(self):
         points = ranker.calc_ranked_points(tie1_pos, [])
-        assert tie1_points_4_zones == points, "Wrong points"
+        self.assertEqual(tie1_points_4_zones, points, "Wrong points")
 
     def test_tie_no_dsq(self):
         points = ranker.calc_ranked_points(tie1_pos)
-        assert tie1_points_4_zones == points, "Wrong points"
+        self.assertEqual(tie1_points_4_zones, points, "Wrong points")
 
     def test_dsq_tie(self):
         points = ranker.calc_ranked_points(tie2_pos, tie2_dsq)
-        assert tie2_points_4_zones == points, "Wrong points"
+        self.assertEqual(tie2_points_4_zones, points, "Wrong points")
 
     def test_dsq_tie_one_spare_zone(self):
         points = ranker.calc_ranked_points(tie2_pos, tie2_dsq, num_zones=5)
-        assert tie2_points_5_zones == points, "Wrong points"
+        self.assertEqual(tie2_points_5_zones, points, "Wrong points")
 
     def test_detects_position_overlap_single_tie(self):
         with self.assertRaises(ValueError):
