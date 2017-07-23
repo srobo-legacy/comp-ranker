@@ -67,6 +67,51 @@ def calc_positions(zpoints, dsq_list=()):
     return pos_map
 
 
+def _points_for_position(position, winner_points, num_tied):
+    """
+    Calculate the number of league points for a given position, allowing for
+    ties.
+
+    The number of points awarded decreases by two for each position below the
+    winner, ties are resolved by sharing the points equally. For example, if a
+    tied posiion would normally earn earn 8 points and there is a three-way tie
+    for first place, each gets 6pts since (8+6+4)/3.
+
+    While we could loop over the tied positions to share the points out, it's
+    faster to just use maths to do it for us.
+
+    Given that the general formula for the points at a given position is:
+
+        (tied_pos_points + (tied_pos_points - 2) + (tied_pos_points - 4) ...)
+        ---------------------------------------------------------------------
+                                num_tied
+
+    we start by pulling out the tied_pos_points:
+
+        num_tied * tied_pos_points + ((-2) + (-4) ...)
+        ----------------------------------------------
+                          num_tied
+
+
+    multiplying the right hand part through by -1 and knowing that the sum from
+    1..(n-1) is (n(n-1))/2, we can rewrite that as:
+
+        num_tied * tied_pos_points - num_tied * (num_tied - 1)
+        -------------------------------------------------------
+                               num_tied
+
+    which obviously simplifies to:
+
+        tied_pos_points - (num_tied - 1)
+
+    which is what we use to calculate the points for given position.
+    """
+
+    # pos is 1-indexed, hence the subtraction
+    points = winner_points - 2 * (position - 1)
+
+    return points - (num_tied - 1)
+
 def calc_ranked_points(pos_map, dsq_list=()):
     """
     Calculate SR league points from a mapping of positions to teams.
@@ -117,16 +162,8 @@ def calc_ranked_points(pos_map, dsq_list=()):
         if len(zones) == 0:
             continue
 
-        # max points is 8, decreases by two for subsequent positions. pos is
-        # 1-indexed, hence the subtraction
-        points = 8 - 2*(pos - 1)
-        # Now that we have the value for this position if it were not a tie,
-        # we need to allow for ties. In case of a tie, the available points
-        # for all the places used are shared by all those thus placed.
-        # Eg: three first places get 6pts each (8+6+4)/3.
-        # Rather than generate a list and average it, it's quicker to just
-        # do some maths using the max value and the length of the list
-        points = points - (len(zones) - 1)
+        points = _points_for_position(pos, winner_points=8, num_tied=len(zones))
+
         for zone in zones:
             rpoints[zone] = points
 
