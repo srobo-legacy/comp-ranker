@@ -33,15 +33,22 @@ tie2_points_5_zones = { '0': 0, '1': 10, '2': 0, '3': 8 }
 class PositionsTests(unittest.TestCase):
     longMessage = True
 
-    def test_reject_non_integer_points(self):
-        data = {k: str(v) for k, v in simple_data.items()}
-        with self.assertRaises(ValueError):
-            ranker.calc_positions(data)
+    def test_negative_points(self):
+        # Made negative by subtracting a number large enough to make them all
+        # negative
+        offset = 3 + max(simple_data.values())
+        data = {k: v - offset for k, v in simple_data.items()}
 
-    def test_reject_negative_points(self):
-        data = {k: -v for k, v in simple_data.items()}
-        with self.assertRaises(ValueError):
-            ranker.calc_positions(data)
+        pos = ranker.calc_positions(data, [])
+        self.assertEqual(simple_pos, pos, "Wrong positions")
+
+    def test_non_integer_points(self):
+        # Zero prefixed numbers stored as strings
+        max_len = len(str(max(simple_data.values())))
+        data = {k: str(v).zfill(max_len) for k, v in simple_data.items()}
+
+        pos = ranker.calc_positions(data, [])
+        self.assertEqual(simple_pos, pos, "Wrong positions")
 
     def test_simple(self):
         pos = ranker.calc_positions(simple_data, [])
