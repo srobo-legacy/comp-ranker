@@ -6,9 +6,10 @@ Ranker
 Given a collection of entrants and their scores, it will sort them and
 return their ranked points.
 
-The mechanism used to allocate the ranked points is (quote taken from the
-`Student Robotics <https://www.studentrobotics.org>`__
-`rulebook <https://www.studentrobotics.org/docs/rules>`__).
+The mechanism used to allocate the ranked points is a generalised form of that
+used for the `Student Robotics <https://www.studentrobotics.org>`__ league
+points (quote from the SR
+`rulebook <https://www.studentrobotics.org/docs/rules>`__):
 
     The team with the **most** game points will be awarded 8 points
     towards the competition league. The team with the second most will
@@ -22,8 +23,14 @@ The mechanism used to allocate the ranked points is (quote taken from the
     first place would receive 6 points each (since this is
     ``(8+6+4)/3``).
 
-As a result, the ranked points for an entrant (team) might not be an
-integer. However, for 4 entrants the value will always be an integer.
+The ranker supports an arbitrary number of entrants and zones (as long as there
+are fewer entrants than zones) and will return points which follow the pattern
+described above.
+
+The points for the winning team will be 2 * the number of zones, points for
+subsequent places reduce by 2 points per place. Ties are resolved as described
+and as a result of the points per place reducing by two, the points for any
+entrant will always be an integer.
 
 It supports Python 2.7 and 3.x.
 
