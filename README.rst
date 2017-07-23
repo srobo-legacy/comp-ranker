@@ -6,7 +6,7 @@ Ranker
 Given a collection of entrants and their scores, it will sort them and
 return their ranked points.
 
-The mechanism used to alocate the ranked points is (quote taken from the
+The mechanism used to allocate the ranked points is (quote taken from the
 `Student Robotics <https://www.studentrobotics.org>`__
 `rulebook <https://www.studentrobotics.org/docs/rules>`__).
 
