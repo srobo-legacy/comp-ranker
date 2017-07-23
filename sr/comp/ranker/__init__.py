@@ -92,7 +92,6 @@ def _points_for_position(position, winner_points, num_tied):
         ----------------------------------------------
                           num_tied
 
-
     multiplying the right hand part through by -1 and knowing that the sum from
     1..(n-1) is (n(n-1))/2, we can rewrite that as:
 
