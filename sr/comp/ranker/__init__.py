@@ -13,8 +13,7 @@ def calc_positions(zpoints, dsq_list=()):
     ----------
     zpoints : dict
         A mapping from some key (typically a zone or corner name) to game
-        points (usually a numeric type, but can be any type that is comparable
-        and usable as a key for dictionaries).
+        points (a positive number, which may be zero).
     dsq_list : list
         If provided, is a :py:class:`list` of keys of teams or zones that have
         been disqualified and are therefore considered below last place.
@@ -46,6 +45,16 @@ def calc_positions(zpoints, dsq_list=()):
     points_map = defaultdict(set)
 
     for zone, points in zpoints.items():
+        if not isinstance(points, (int, float)):
+            raise ValueError(
+                "Invalid type of game points ({0}) in zone {1}".format(points, zone),
+            )
+
+        if points < 0:
+            raise ValueError(
+                "Game points must be positive ({0}) in zone {1}".format(points, zone),
+            )
+
         if zone in dsq_list:
             points = -1
         points_map[points].add(zone)

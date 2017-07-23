@@ -7,7 +7,7 @@ with open('README.rst') as f:
 
 setup(
     name='sr.comp.ranker',
-    version='1.0.0',
+    version='1.1.0',
     packages=find_packages(),
     namespace_packages=['sr', 'sr.comp'],
     long_description=long_description,

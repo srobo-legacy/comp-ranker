@@ -23,6 +23,16 @@ tie2_points = { '0': 0, '1': 8, '2': 0, '3': 6 }
 
 
 class PositionsTests(unittest.TestCase):
+    def test_reject_non_integer_points(self):
+        with self.assertRaises(ValueError):
+            data = {k: str(v) for k, v in simple_data.items()}
+            ranker.calc_positions(data)
+
+    def test_reject_negative_points(self):
+        with self.assertRaises(ValueError):
+            data = {k: -v for k, v in simple_data.items()}
+            ranker.calc_positions(data)
+
     def test_simple(self):
         pos = ranker.calc_positions(simple_data, [])
         assert simple_pos == pos, "Wrong positions"
