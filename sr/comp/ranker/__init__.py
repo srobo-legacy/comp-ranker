@@ -4,6 +4,8 @@ from __future__ import print_function
 
 from collections import defaultdict
 
+DEFAULT_NUM_ZONES = 4
+
 
 def calc_positions(zpoints, dsq_list=()):
     """
@@ -111,7 +113,7 @@ def _points_for_position(position, winner_points, num_tied):
 
     return points - (num_tied - 1)
 
-def calc_ranked_points(pos_map, dsq_list=(), num_zones=4):
+def calc_ranked_points(pos_map, dsq_list=(), num_zones=DEFAULT_NUM_ZONES):
     """
     Calculate league points from a mapping of positions to teams.
 
@@ -206,7 +208,7 @@ def calc_ranked_points(pos_map, dsq_list=(), num_zones=4):
     return rpoints
 
 
-def get_ranked_points(zpoints, dsq=()):
+def get_ranked_points(zpoints, dsq=(), num_zones=DEFAULT_NUM_ZONES):
     """
     Compute, from a mapping of teams to game points, the teams' league points.
 
@@ -222,7 +224,7 @@ def get_ranked_points(zpoints, dsq=()):
     """
 
     pos_map = calc_positions(zpoints, dsq)
-    rpoints = calc_ranked_points(pos_map, dsq)
+    rpoints = calc_ranked_points(pos_map, dsq, num_zones)
     return rpoints
 
 
