@@ -14,8 +14,10 @@ setup(
     author='Student Robotics Competition Software SIG',
     author_email='srobo-devel@googlegroups.com',
     setup_requires=[
-        'nose >=1.3, <2',
         'Sphinx >=1.3, <2'
+    ],
+    tests_require=[
+        'nose >=1.3, <2',
     ],
     test_suite='nose.collector',
     zip_safe=False
