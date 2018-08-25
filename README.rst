@@ -3,8 +3,8 @@ Ranker
 
 |Build Status|
 
-Given a collection of entrants and their scores, it will sort them and
-return their ranked points.
+Given a collection of entrants and their scores, sort them and return their
+ranked points.
 
 The mechanism used to allocate the ranked points is a generalised form of that
 used for the `Student Robotics <https://www.studentrobotics.org>`__ league
