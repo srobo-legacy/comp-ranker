@@ -37,7 +37,8 @@ It supports Python 2.7 and 3.x.
 Tests
 ~~~~~
 
-Tests can be run by running ``./run-tests``.
+Tests can be run for the current interpreter by running ``./run-tests`` or for
+all supported available interpreters by running ``tox``.
 
 .. |Build Status| image:: https://travis-ci.org/PeterJCLaw/ranker.png
    :target: https://travis-ci.org/PeterJCLaw/ranker
