@@ -7,38 +7,4 @@ jobs:
 
     steps:
       - checkout
-
-        # Set up a cached virtualenv in which to install tox
-      - restore_cache:
-          name: Restore build dependency cache
-          key: deps-venv-3.2.1
-      - run:
-          name: Install tox
-          command: |
-            python3 -m venv venv
-            . venv/bin/activate
-            pip install tox==3.2.1
-      - save_cache:
-          name: Save build dependency cache
-          key: deps-venv-3.2.1
-          paths:
-            - "venv"
-
-      # Run tox, caching the .tox directory
-      - restore_cache:
-          name: Restore .tox cache
-          key: deps-tox-{{ checksum "setup.py" }}-{{ checksum "tox.ini" }}
-      - run:
-          name: Test
-          command: |
-            . venv/bin/activate
-            TOXENV=py36 tox
-      - save_cache:
-          name: Save .tox cache
-          key: deps-tox-{{ checksum "setup.py" }}-{{ checksum "tox.ini" }}
-          paths:
-            - ".tox"
-
-      # Testing done, store results
-      - store_test_results:
-          path: build/results
+      - run: python setup.py test
