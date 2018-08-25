@@ -16,9 +16,6 @@ setup(
     setup_requires=[
         'Sphinx >=1.3, <2'
     ],
-    tests_require=[
-        'nose >=1.3, <2',
-    ],
-    test_suite='nose.collector',
+    test_suite='tests',
     zip_safe=False
 )

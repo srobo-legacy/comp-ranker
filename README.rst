@@ -37,7 +37,7 @@ It supports Python 2.7 and 3.x.
 Tests
 ~~~~~
 
-Tests can be run by running ``./run-tests``, which relies on nose.
+Tests can be run by running ``./run-tests``.
 
 .. |Build Status| image:: https://travis-ci.org/PeterJCLaw/ranker.png
    :target: https://travis-ci.org/PeterJCLaw/ranker
